@@ -240,7 +240,7 @@
           );
           data.forEach((prov) => {
             provinsiSelect.append(
-              `<option value="${prov.name}">${prov.name}</option>`
+              `<option value="${prov.id}">${prov.name}</option>`
             );
           });
           provinsiSelect.trigger('change');
@@ -256,7 +256,7 @@
             );
             data.forEach((kab) => {
               kabupatenSelect.append(
-                `<option value="${kab.name}">${kab.name}</option>`
+                `<option value="${kab.id}">${kab.name}</option>`
               );
             });
             kabupatenSelect.trigger('change');
@@ -273,7 +273,7 @@
             );
             data.forEach((kec) => {
               kecamatanSelect.append(
-                `<option value="${kec.name}">${kec.name}</option>`
+                `<option value="${kec.id}">${kec.name}</option>`
               );
             });
             kecamatanSelect.trigger('change');
