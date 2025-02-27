@@ -146,9 +146,10 @@
                 </div>
                 <div class="col-md-6 mt-2">
                   <label for="desa" class="form-label">Desa/Kelurahan</label>
-                  <select id="desa" class="form-select select2" name="kelurahan" required>
+                  <select id="desa" class="form-select select2"  required>
                     <option value="">Pilih Desa/Kelurahan</option>
                   </select>
+                   <input type="hidden" name="kelurahan" id="desa_nama">
                 </div>
                 <div class="col-md-6 mt-2">
                   <label for="rt" class="form-label">RT</label>
@@ -298,7 +299,10 @@
             desaSelect.trigger('change');
         }
     });
-
+     $('#desa').on('change', function () {
+          const nameDesa = $(this).find(':selected').data('name');
+          $('#desa_nama').val(nameDesa);
+      });
     loadProvinsi();
 });
 
