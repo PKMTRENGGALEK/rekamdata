@@ -104,7 +104,7 @@
             <thead>
               <tr>
                 <th>Timestamp</th>
-                <th>Jaringan Pelayanan</th>
+                <th>Faskes</th>
                 <th>Tanggal</th>
                 <th>Nama</th>
                 <th>NIK</th>
@@ -222,40 +222,41 @@
       }
 
       $(document).ready(function () {
-        $("#loading").show();
-        fetch(
-          "https://script.google.com/macros/s/AKfycbxeMNOb6KnATCyppjqP2rdH7AAMXR-BfKvtutXyi2IdhGGflC7Hi_1mfTqRIlEp6xV-/exec"
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Data fetched:", data);
-            let table = $("#dataTable").DataTable();
-            data.forEach((row) => {
-              table.row
-                .add([
-                  formatTimestamp(row["timestamp"]),
-                  row["faskes"] || "-",
-                  formatTimestamp(row["tanggal"] || "-"),
-                  row["nama"] || "-",
-                  row["nik"] || "-",
-                  row["no_telp"] || "-",
-                  row["provinsi"] || "-",
-                  row["kabupaten"] || "-",
-                  row["kecamatan"] || "-",
-                  row["kelurahan"] || "-",
-                  row["rt"] || "-",
-                  row["rw"] || "-",
-                  row["lama_batuk"] || "-",
-                ])
-                .draw(false);
-            });
-            $("#loading").hide();
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
-            alert("Gagal mengambil data. Periksa koneksi atau ID skrip API.");
-            $("#loading").hide();
-          });
+        $("#loading").show(); // Tampilkan loading hanya saat pertama kali render
+
+        // Inisialisasi DataTable dengan AJAX
+        let table = $("#dataTable").DataTable({
+          ajax: {
+            url: "https://script.google.com/macros/s/AKfycbxeMNOb6KnATCyppjqP2rdH7AAMXR-BfKvtutXyi2IdhGGflC7Hi_1mfTqRIlEp6xV-/exec",
+            dataSrc: "",
+            complete: function () {
+              $("#loading").hide(); // Loading hilang setelah data pertama kali dimuat
+            },
+          },
+          columns: [
+            { data: "timestamp", render: formatTimestamp },
+            { data: "faskes", defaultContent: "-" },
+            { data: "tanggal", render: formatTimestamp },
+            { data: "nama", defaultContent: "-" },
+            { data: "nik", defaultContent: "-" },
+            { data: "no_telp", defaultContent: "-" },
+            { data: "provinsi", defaultContent: "-" },
+            { data: "kabupaten", defaultContent: "-" },
+            { data: "kecamatan", defaultContent: "-" },
+            { data: "kelurahan", defaultContent: "-" },
+            { data: "rt", defaultContent: "-" },
+            { data: "rw", defaultContent: "-" },
+            { data: "lama_batuk", defaultContent: "-" },
+          ],
+          responsive: true,
+          <!-- processing: true, -->
+          paging: true,
+        });
+
+        // Auto-refresh DataTable setiap 30 detik TANPA LOADING
+        setInterval(function () {
+          table.ajax.reload(null, false); // Reload data tanpa loading
+        }, 5000);
       });
     </script>
   </body>
