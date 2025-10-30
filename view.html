@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Skrining Kesehatan</title>
+
+    <!-- Bootstrap & DataTables -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,7 +22,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -85,6 +86,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="loading-overlay" id="loading">
       <div class="loading-spinner"></div>
@@ -98,12 +100,13 @@
       <h2>Data Skrining TBC</h2>
       <h4>Agen Kribo</h4>
 
-      <div class="card p-4">
+      <!-- Tahun 2025 -->
+      <div class="card p-4 mb-4">
+        <h5 class="text-white">Data Tahun 2025</h5>
         <div class="table-responsive">
           <table
-            id="dataTable"
-            class="table table-striped table-bordered"
-            style="width: 100%"
+            id="table2025"
+            class="table table-striped table-bordered w-100"
           >
             <thead>
               <tr>
@@ -124,247 +127,206 @@
             <tbody></tbody>
           </table>
         </div>
-      </div>
 
-      <!-- GRAFIK -->
-      <div class="card mt-4">
-        <h5 class="text-white mb-3">Grafik Jumlah Laporan per Faskes</h5>
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <div style="height: 250px">
-              <canvas id="faskesChart"></canvas>
+        <div class="mt-4">
+          <h6 class="text-white mb-3">
+            Grafik Jumlah Laporan per Faskes (2025)
+          </h6>
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <canvas id="chart2025" style="height: 250px"></canvas>
+            </div>
+            <div class="col-md-4">
+              <ul
+                id="list2025"
+                class="list-group list-group-flush text-start"
+              ></ul>
             </div>
           </div>
-          <div class="col-md-4">
-            <ul
-              id="totalList"
-              class="list-group list-group-flush text-start"
-            ></ul>
+        </div>
+      </div>
+
+      <!-- Tahun 2024 -->
+      <div class="card p-4">
+        <h5 class="text-white">Data Tahun 2024</h5>
+        <div class="table-responsive">
+          <table
+            id="table2024"
+            class="table table-striped table-bordered w-100"
+          >
+            <thead>
+              <tr>
+                <th>Faskes</th>
+                <th>Tanggal</th>
+                <th>Nama</th>
+                <th>NIK</th>
+                <th>No. Telepon</th>
+                <th>Provinsi</th>
+                <th>Kabupaten</th>
+                <th>Kecamatan</th>
+                <th>Kelurahan</th>
+                <th>RT</th>
+                <th>RW</th>
+                <th>Lama Batuk</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="mt-4">
+          <h6 class="text-white mb-3">
+            Grafik Jumlah Laporan per Faskes (2024)
+          </h6>
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <canvas id="chart2024" style="height: 250px"></canvas>
+            </div>
+            <div class="col-md-4">
+              <ul
+                id="list2024"
+                class="list-group list-group-flush text-start"
+              ></ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="container">
-      <footer
-        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
-      >
-        <div class="col-md-4 d-flex align-items-center">
-          <a
-            href="/"
-            class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"
-          >
-            <!-- <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg> -->
-          </a>
-          <span class="text-muted">&copy; 2025 Puskesmas Trenggalek</span>
-        </div>
 
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-          <!-- <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li> -->
-          <li class="ms-3">
-            <a
-              class="text-muted"
-              href="https://pkm-trenggalek.trenggalekkab.go.id/"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-globe2"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855q-.215.403-.395.872c.705.157 1.472.257 2.282.287zM4.249 3.539q.214-.577.481-1.078a7 7 0 0 1 .597-.933A7 7 0 0 0 3.051 3.05q.544.277 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9 9 0 0 1-1.565-.667A6.96 6.96 0 0 0 1.018 7.5zm1.4-2.741a12.3 12.3 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332M8.5 5.09V7.5h2.99a12.3 12.3 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.6 13.6 0 0 1 7.5 10.91V8.5zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741zm-3.282 3.696q.18.469.395.872c.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a7 7 0 0 1-.598-.933 9 9 0 0 1-.481-1.079 8.4 8.4 0 0 0-1.198.49 7 7 0 0 0 2.276 1.522zm-1.383-2.964A13.4 13.4 0 0 1 3.508 8.5h-2.49a6.96 6.96 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667m6.728 2.964a7 7 0 0 0 2.275-1.521 8.4 8.4 0 0 0-1.197-.49 9 9 0 0 1-.481 1.078 7 7 0 0 1-.597.933M8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855q.216-.403.395-.872A12.6 12.6 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.96 6.96 0 0 0 14.982 8.5h-2.49a13.4 13.4 0 0 1-.437 3.008M14.982 7.5a6.96 6.96 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008zM11.27 2.461q.266.502.482 1.078a8.4 8.4 0 0 0 1.196-.49 7 7 0 0 0-2.275-1.52c.218.283.418.597.597.932m-.488 1.343a8 8 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"
-                /></svg
-            ></a>
-          </li>
-          <li class="ms-3">
-            <a
-              class="text-muted"
-              href="https://www.facebook.com/p/Puskesmas-Trenggalek-100069977124442/?locale=id_ID"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-facebook"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"
-                /></svg
-            ></a>
-          </li>
-          <li class="ms-3">
-            <a
-              class="text-muted"
-              href="https://www.instagram.com/puskesmas.trenggalek/"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-instagram"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"
-                /></svg
-            ></a>
-          </li>
-          <li class="ms-3">
-            <a
-              class="text-muted"
-              href="https://www.youtube.com/@puskesmastrenggalekofficia3097"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-youtube"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"
-                /></svg
-            ></a>
-          </li>
-        </ul>
-      </footer>
-    </div>
     <script>
-      function formatTimestamp(timestamp) {
-        if (!timestamp) return "-";
-        const date = new Date(timestamp);
-        if (isNaN(date)) return timestamp;
-        const day = String(date.getDate()).padStart(2, "0");
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
+      const GAS_URL =
+        "https://script.google.com/macros/s/AKfycbxeMNOb6KnATCyppjqP2rdH7AAMXR-BfKvtutXyi2IdhGGflC7Hi_1mfTqRIlEp6xV-/exec";
+
+      function formatTimestamp(ts) {
+        if (!ts) return "-";
+        const d = new Date(ts);
+        if (isNaN(d)) return ts;
+        const dd = String(d.getDate()).padStart(2, "0");
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const yy = d.getFullYear();
+        return `${dd}-${mm}-${yy}`;
       }
 
-      let chartInstance = null;
+      function renderChart(targetCanvas, targetList, data, year) {
+        const count = {};
+        data.forEach((r) => {
+          const f = r.faskes || "Tidak diketahui";
+          count[f] = (count[f] || 0) + 1;
+        });
 
-      $(document).ready(function () {
-        $("#loading").show();
+        const labels = Object.keys(count);
+        const values = Object.values(count);
 
-        // Inisialisasi DataTable
-        let table = $("#dataTable").DataTable({
-          ajax: {
-            url: "https://script.google.com/macros/s/AKfycbxeMNOb6KnATCyppjqP2rdH7AAMXR-BfKvtutXyi2IdhGGflC7Hi_1mfTqRIlEp6xV-/exec",
-            dataSrc: "",
-            complete: function () {
-              $("#loading").hide();
+        const colors = [
+          "rgba(255, 99, 132, 0.7)",
+          "rgba(54, 162, 235, 0.7)",
+          "rgba(255, 206, 86, 0.7)",
+          "rgba(75, 192, 192, 0.7)",
+          "rgba(153, 102, 255, 0.7)",
+          "rgba(255, 159, 64, 0.7)",
+          "rgba(255, 255, 255, 0.6)",
+        ];
+
+        new Chart(document.getElementById(targetCanvas), {
+          type: "bar",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: `Jumlah Laporan ${year}`,
+                data: values,
+                backgroundColor: colors.slice(0, labels.length),
+                borderColor: "#fff",
+                borderWidth: 1.5,
+                borderRadius: 5,
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { color: "white", font: { size: 10 } } },
+              y: {
+                beginAtZero: true,
+                ticks: { color: "white", font: { size: 10 } },
+                grid: { color: "rgba(255,255,255,0.2)" },
+              },
             },
           },
-          columns: [
-            { data: "faskes", defaultContent: "-" },
-            { data: "tanggal", render: formatTimestamp },
-            { data: "nama", defaultContent: "-" },
-            { data: "nik", defaultContent: "-" },
-            { data: "no_telp", defaultContent: "-" },
-            { data: "provinsi", defaultContent: "-" },
-            { data: "kabupaten", defaultContent: "-" },
-            { data: "kecamatan", defaultContent: "-" },
-            { data: "kelurahan", defaultContent: "-" },
-            { data: "rt", defaultContent: "-" },
-            { data: "rw", defaultContent: "-" },
-            { data: "lama_batuk", defaultContent: "-" },
-          ],
-          responsive: true,
-          paging: true,
-          dom: "Bfrtip",
-          buttons: ["excel", "print"],
         });
 
-        function updateChart(data) {
-          const countPerFaskes = {};
-          data.forEach((row) => {
-            const faskes = row.faskes || "Tidak diketahui";
-            countPerFaskes[faskes] = (countPerFaskes[faskes] || 0) + 1;
-          });
-
-          const labels = Object.keys(countPerFaskes);
-          const values = Object.values(countPerFaskes);
-
-          const ctx = document.getElementById("faskesChart").getContext("2d");
-
-          if (chartInstance) chartInstance.destroy(); // hapus chart lama agar tidak dobel
-
-          // 🎨 warna batang acak tapi lembut
-          const colors = [
-            "rgba(255, 99, 132, 0.7)",
-            "rgba(54, 162, 235, 0.7)",
-            "rgba(255, 206, 86, 0.7)",
-            "rgba(75, 192, 192, 0.7)",
-            "rgba(153, 102, 255, 0.7)",
-            "rgba(255, 159, 64, 0.7)",
-            "rgba(255, 255, 255, 0.6)",
-          ];
-
-          chartInstance = new Chart(ctx, {
-            type: "bar",
-            data: {
-              labels: labels,
-              datasets: [
-                {
-                  label: "Jumlah Laporan",
-                  data: values,
-                  backgroundColor: colors.slice(0, labels.length),
-                  borderColor: "#ffffff",
-                  borderWidth: 1.5,
-                  borderRadius: 5,
-                },
-              ],
-            },
-            options: {
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: false },
-                title: { display: false },
-              },
-              scales: {
-                x: {
-                  ticks: { color: "white", font: { size: 10 } },
-                },
-                y: {
-                  ticks: { color: "white", font: { size: 10 } },
-                  beginAtZero: true,
-                  grid: { color: "rgba(255,255,255,0.2)" },
-                },
-              },
-            },
-          });
-
-          // 🧾 tampilkan total per faskes di list samping grafik
-          const listContainer = document.getElementById("totalList");
-          listContainer.innerHTML = ""; // kosongkan dulu
-
-          labels.forEach((label, i) => {
-            const item = document.createElement("li");
-            item.className =
-              "list-group-item d-flex justify-content-between align-items-center";
-            item.style.background = "rgba(255,255,255,0.1)";
-            item.style.color = "white";
-            item.innerHTML = `
-            <span>${label}</span>
-            <span class="badge bg-light text-dark">${values[i]}</span>
-          `;
-            listContainer.appendChild(item);
-          });
-        }
-
-        // Saat data pertama kali dimuat
-        table.on("xhr", function () {
-          const json = table.ajax.json();
-          if (json && Array.isArray(json)) updateChart(json);
+        const list = document.getElementById(targetList);
+        list.innerHTML = "";
+        labels.forEach((lbl, i) => {
+          list.innerHTML += `
+            <li class="list-group-item d-flex justify-content-between align-items-center" 
+                style="background:rgba(255,255,255,0.1);color:white;">
+              <span>${lbl}</span>
+              <span class="badge bg-light text-dark">${values[i]}</span>
+            </li>`;
         });
+      }
 
-        // Auto-refresh setiap 30 detik TANPA loading
-        setInterval(function () {
-          table.ajax.reload(function (json) {
-            if (json && Array.isArray(json)) updateChart(json);
-          }, false);
-        }, 30000);
+      $(document).ready(() => {
+        $("#loading").show();
+        $.getJSON(GAS_URL, function (rows) {
+          $("#loading").hide();
+
+          // Pisahkan data berdasarkan tahun
+          const data2025 = rows.filter(
+            (r) => new Date(r.tanggal).getFullYear() === 2025
+          );
+          const data2024 = rows.filter(
+            (r) => new Date(r.tanggal).getFullYear() === 2024
+          );
+
+          // Table 2025
+          $("#table2025").DataTable({
+            data: data2025,
+            columns: [
+              { data: "faskes" },
+              { data: "tanggal", render: formatTimestamp },
+              { data: "nama" },
+              { data: "nik" },
+              { data: "no_telp" },
+              { data: "provinsi" },
+              { data: "kabupaten" },
+              { data: "kecamatan" },
+              { data: "kelurahan" },
+              { data: "rt" },
+              { data: "rw" },
+              { data: "lama_batuk" },
+            ],
+            dom: "Bfrtip",
+            buttons: ["excel", "print"],
+          });
+
+          // Table 2024
+          $("#table2024").DataTable({
+            data: data2024,
+            columns: [
+              { data: "faskes" },
+              { data: "tanggal", render: formatTimestamp },
+              { data: "nama" },
+              { data: "nik" },
+              { data: "no_telp" },
+              { data: "provinsi" },
+              { data: "kabupaten" },
+              { data: "kecamatan" },
+              { data: "kelurahan" },
+              { data: "rt" },
+              { data: "rw" },
+              { data: "lama_batuk" },
+            ],
+            dom: "Bfrtip",
+            buttons: ["excel", "print"],
+          });
+
+          // Tampilkan chart per tahun
+          renderChart("chart2025", "list2025", data2025, 2025);
+          renderChart("chart2024", "list2024", data2024, 2024);
+        });
       });
     </script>
   </body>
