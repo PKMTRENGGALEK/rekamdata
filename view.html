@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Skrining Kesehatan</title>
 
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <!-- Bootstrap & DataTables -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -14,7 +17,6 @@
       rel="stylesheet"
       href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
     />
-    <!-- CSS khusus untuk button DataTables agar tampilannya rapi -->
     <link
       rel="stylesheet"
       href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css"
@@ -27,11 +29,7 @@
     
     <!-- DataTables Buttons Core -->
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-    
-    <!-- PERBAIKAN: Tambahkan library Print -->
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-    
-    <!-- Library HTML5 (Excel, PDF, Copy) -->
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -41,134 +39,205 @@
 
     <style>
       body {
-        background: linear-gradient(to right, #67b26f, #4ca2cd);
-        color: white;
+        background-color: #f8f9fa;
+        color: #333;
+        font-family: 'Inter', sans-serif;
         min-height: 100vh;
       }
+
       .container {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 60px;
+        max-width: 1400px;
       }
+
+      /* Card Style Modern */
       .card {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255,255,255,0.3);
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        text-align: left;
       }
-      /* DataTable Styling */
-      .dataTables_wrapper .dataTables_length, 
-      .dataTables_wrapper .dataTables_filter, 
-      .dataTables_wrapper .dataTables_info, 
-      .dataTables_wrapper .dataTables_paginate {
-        color: white;
-        margin-top: 10px;
+
+      .card h5 {
+        font-weight: 700;
+        color: #2d3436;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f1f3f5;
+        margin-bottom: 20px;
       }
-      .dataTables_wrapper .dataTables_filter input {
-        border-radius: 5px;
-        padding: 5px;
-        border: none;
-      }
-      .page-item.active .page-link {
-        background-color: #67b26f;
-        border-color: #4ca2cd;
-      }
-      .page-link { color: #333; }
-      
-      .table {
-        font-size: 12px;
-        text-transform: uppercase;
-        color: #333; 
-      }
-      .table thead tr {
-        background: linear-gradient(to right, #67b26f, #4ca2cd);
-        color: white;
-      }
-      .table-container {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 10px;
-        padding: 10px;
-        min-height: 200px; 
-      }
-      .loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        flex-direction: column;
-      }
-      .loading-text {
-        margin-top: 20px;
-        font-size: 1.2rem;
-        font-weight: bold;
-      }
-      .loading-spinner {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 6px solid rgba(255, 255, 255, 0.3);
-        border-top: 6px solid #ffffff;
-        animation: spin 1s linear infinite;
-      }
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
+
+      /* Logo Container */
       .logo-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
-        background: rgba(255,255,255,0.2);
-        padding: 15px;
-        border-radius: 10px;
+        background: white;
+        padding: 20px 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        flex-wrap: wrap;
+        gap: 20px;
       }
       .logo-container img {
-        max-height: 80px;
-        background: white;
-        border-radius: 50%; 
-        padding: 5px;
+        max-height: 80px; 
+        object-fit: contain;
+        border: 1px solid transparent; 
       }
+
+      /* Typography */
+      h2 {
+        font-weight: 800;
+        color: #2d3436;
+        letter-spacing: -0.5px;
+      }
+      h4 {
+        color: #636e72;
+        font-weight: 500;
+        margin-bottom: 30px;
+      }
+      h6 {
+        font-weight: 600;
+        color: #2d3436;
+      }
+
+      /* DataTable Styling */
+      .dataTables_wrapper .dataTables_length, 
+      .dataTables_wrapper .dataTables_filter, 
+      .dataTables_wrapper .dataTables_info, 
+      .dataTables_wrapper .dataTables_paginate {
+        color: #636e72;
+        font-size: 0.9rem;
+        margin-top: 15px;
+      }
+      .dataTables_wrapper .dataTables_filter input {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 8px 12px;
+        outline: none;
+        transition: 0.3s;
+        width: 100%;
+        max-width: 200px;
+      }
+      .dataTables_wrapper .dataTables_filter input:focus {
+        border-color: #67b26f;
+      }
+      
+      .page-item.active .page-link {
+        background-color: #67b26f;
+        border-color: #67b26f;
+      }
+      .page-link { color: #636e72; border: none; margin: 0 5px; border-radius: 8px; }
+      .page-link:hover { background-color: #e9ecef; color: #2d3436; }
+      
+      .table {
+        font-size: 13px;
+        color: #495057;
+        width: 100%;
+      }
+      .table thead tr {
+        background-color: #f1f3f5;
+        color: #2d3436;
+        font-weight: 600;
+      }
+      .table tbody tr {
+        transition: 0.2s;
+      }
+      .table tbody tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      /* Buttons Styling */
+      .dt-buttons {
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .dt-buttons .btn {
+        margin-bottom: 5px;
+      }
+      .btn-success { 
+        background-color: #67b26f; 
+        border: none;
+        box-shadow: 0 4px 6px rgba(103, 178, 111, 0.2);
+        font-weight: 500;
+      }
+      .btn-success:hover { background-color: #55975d; }
+      .btn-secondary { 
+        background-color: #2d3436; 
+        border: none;
+        box-shadow: 0 4px 6px rgba(45, 52, 54, 0.2);
+        font-weight: 500;
+      }
+
+      /* Chart & List Styling */
+      .chart-wrapper {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 15px;
+        border: 1px solid #f1f3f5;
+      }
+      .list-group-item {
+        border: none;
+        border-bottom: 1px solid #f1f3f5;
+        color: #495057;
+        padding: 12px 0;
+      }
+      .list-group-item:last-child { border-bottom: none; }
+      
       .badge-custom {
-        background-color: white;
-        color: #4ca2cd;
-        font-weight: bold;
+        background-color: #e3fcf7;
+        color: #0ca678;
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 6px;
       }
-      /* Styling khusus tombol Excel/Print agar warnanya lebih cocok */
-      .btn-success { color: #fff; }
-      .btn-secondary { color: #333; }
+
+      /* Loading Spinner */
+      .loading-overlay {
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 9999;
+      }
+      .loading-text {
+        color: #2d3436;
+        font-weight: 600;
+      }
+      .loading-spinner {
+        border-color: #e9ecef;
+        border-top-color: #67b26f;
+      }
+
     </style>
   </head>
 
   <body>
     <!-- Loading Screen -->
-    <div class="loading-overlay" id="loading">
+    <div class="loading-overlay position-fixed top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center" id="loading">
       <div class="loading-spinner"></div>
-      <div class="loading-text">Memuat Data...</div>
+      <div class="loading-text mt-3">Memuat Data...</div>
     </div>
 
     <div class="container">
-      <div class="logo-container">
-        <img src="pkmlogo.png" alt="PKM Logo" onerror="this.src='https://via.placeholder.com/80?text=PKM'" />
-        <img src="kribo.png" alt="Kribo Logo" onerror="this.src='https://via.placeholder.com/80?text=Kribo'" />
+      <!-- LOGO PERTAHANKAN PNG -->
+      <div class="logo-container justify-content-center justify-content-lg-between">
+        <img src="pkmlogo.png" alt="Logo Puskesmas" class="img-fluid" />
+        <img src="kribo.png" alt="Logo Agen Kribo" class="img-fluid" />
       </div>
       
-      <h2 class="fw-bold">Data Skrining TBC</h2>
-      <h4 class="mb-4">Agen Kribo</h4>
+      <div class="text-center mb-5">
+        <h2>Data Skrining TBC</h2>
+        <h4>Dashboard Agen Kribo</h4>
+      </div>
 
       <!-- Tahun 2026 -->
-      <div class="card p-4 mb-4">
-        <h5 class="text-white border-bottom border-light pb-2">Data Tahun 2026</h5>
-        <div class="table-container mb-3">
-          <table id="table2026" class="table table-striped table-bordered w-100">
+      <div class="card p-4">
+        <h5 class="pb-2">Data Tahun 2026</h5>
+        
+        <div class="table-responsive mb-4">
+          <table id="table2026" class="table table-hover align-middle">
             <thead>
               <tr>
                 <th>Faskes</th>
@@ -189,28 +258,27 @@
           </table>
         </div>
 
-        <div class="mt-2">
-          <h6 class="text-white mb-3 text-start">
-            <i class="bi bi-bar-chart-fill"></i> Grafik Jumlah Laporan per Faskes (2026)
-          </h6>
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;">
+        <div class="mt-4 pt-4 border-top">
+          <h6 class="mb-4">Statistik Laporan 2026</h6>
+          <div class="row g-4">
+            <div class="col-12 col-lg-8">
+              <div class="chart-wrapper">
                 <canvas id="chart2026" style="height: 250px; width: 100%;"></canvas>
               </div>
             </div>
-            <div class="col-md-4">
-              <ul id="list2026" class="list-group list-group-flush text-start"></ul>
+            <div class="col-12 col-lg-4">
+              <ul id="list2026" class="list-group list-group-flush"></ul>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Tahun 2025 -->
-      <div class="card p-4 mb-4">
-        <h5 class="text-white border-bottom border-light pb-2">Data Tahun 2025</h5>
-        <div class="table-container mb-3">
-          <table id="table2025" class="table table-striped table-bordered w-100">
+      <div class="card p-4">
+        <h5 class="pb-2">Data Tahun 2025</h5>
+        
+        <div class="table-responsive mb-4">
+          <table id="table2025" class="table table-hover align-middle">
             <thead>
               <tr>
                 <th>Faskes</th>
@@ -231,18 +299,16 @@
           </table>
         </div>
 
-        <div class="mt-2">
-          <h6 class="text-white mb-3 text-start">
-             Grafik Jumlah Laporan per Faskes (2025)
-          </h6>
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;">
+        <div class="mt-4 pt-4 border-top">
+          <h6 class="mb-4">Statistik Laporan 2025</h6>
+          <div class="row g-4">
+            <div class="col-12 col-lg-8">
+              <div class="chart-wrapper">
                 <canvas id="chart2025" style="height: 250px; width: 100%;"></canvas>
               </div>
             </div>
-            <div class="col-md-4">
-              <ul id="list2025" class="list-group list-group-flush text-start"></ul>
+            <div class="col-12 col-lg-4">
+              <ul id="list2025" class="list-group list-group-flush"></ul>
             </div>
           </div>
         </div>
@@ -250,9 +316,10 @@
 
       <!-- Tahun 2024 -->
       <div class="card p-4">
-        <h5 class="text-white border-bottom border-light pb-2">Data Tahun 2024</h5>
-        <div class="table-container mb-3">
-          <table id="table2024" class="table table-striped table-bordered w-100">
+        <h5 class="pb-2">Data Tahun 2024</h5>
+        
+        <div class="table-responsive mb-4">
+          <table id="table2024" class="table table-hover align-middle">
             <thead>
               <tr>
                 <th>Faskes</th>
@@ -273,18 +340,16 @@
           </table>
         </div>
 
-        <div class="mt-2">
-          <h6 class="text-white mb-3 text-start">
-            Grafik Jumlah Laporan per Faskes (2024)
-          </h6>
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;">
+        <div class="mt-4 pt-4 border-top">
+          <h6 class="mb-4">Statistik Laporan 2024</h6>
+          <div class="row g-4">
+            <div class="col-12 col-lg-8">
+              <div class="chart-wrapper">
                 <canvas id="chart2024" style="height: 250px; width: 100%;"></canvas>
               </div>
             </div>
-            <div class="col-md-4">
-              <ul id="list2024" class="list-group list-group-flush text-start"></ul>
+            <div class="col-12 col-lg-4">
+              <ul id="list2024" class="list-group list-group-flush"></ul>
             </div>
           </div>
         </div>
@@ -298,26 +363,20 @@
       function formatTimestamp(ts) {
         if (!ts) return "-";
         const d = new Date(ts);
-        if (isNaN(d)) return ts; // Return as is if invalid
+        if (isNaN(d)) return ts;
         const dd = String(d.getDate()).padStart(2, "0");
         const mm = String(d.getMonth() + 1).padStart(2, "0");
         const yy = d.getFullYear();
         return `${dd}-${mm}-${yy}`;
       }
 
-      // Fungsi pengambilan tahun yang lebih aman
       function getSafeYear(dateInput) {
         if (!dateInput) return null;
         let d = new Date(dateInput);
-        
-        // Cek jika tanggal invalid
         if (isNaN(d.getTime())) {
-            // Coba parse manual jika format string aneh (contoh: "2026", "10-01-2026", dll)
-            // Jika input hanya angka tahun (misal 2026)
             if (String(dateInput).length === 4 && !isNaN(dateInput)) {
                 return parseInt(dateInput);
             }
-            console.warn("Tanggal tidak dikenali:", dateInput);
             return null;
         }
         return d.getFullYear();
@@ -334,31 +393,27 @@
         const values = Object.values(count);
 
         const colors = [
-          "rgba(255, 99, 132, 0.7)",
-          "rgba(54, 162, 235, 0.7)",
-          "rgba(255, 206, 86, 0.7)",
-          "rgba(75, 192, 192, 0.7)",
-          "rgba(153, 102, 255, 0.7)",
-          "rgba(255, 159, 64, 0.7)",
-          "rgba(255, 255, 255, 0.6)",
+          "rgba(103, 178, 111, 0.8)", 
+          "rgba(76, 162, 205, 0.8)",
+          "rgba(255, 159, 64, 0.8)",
+          "rgba(255, 99, 132, 0.8)",
+          "rgba(153, 102, 255, 0.8)",
         ];
 
-        // Hancurkan chart lama jika ada untuk menghindari tumpang tindih saat refresh
         const existingChart = Chart.getChart(targetCanvas);
         if (existingChart) existingChart.destroy();
 
         new Chart(document.getElementById(targetCanvas), {
-          type: "bar",
+          type: 'bar',
           data: {
             labels,
             datasets: [
               {
                 label: `Jumlah Laporan ${year}`,
                 data: values,
-                backgroundColor: colors.slice(0, labels.length),
-                borderColor: "#fff",
-                borderWidth: 1.5,
-                borderRadius: 5,
+                backgroundColor: colors,
+                borderRadius: 6,
+                barPercentage: 0.6,
               },
             ],
           },
@@ -367,13 +422,13 @@
             plugins: { legend: { display: false } },
             scales: {
               x: { 
-                ticks: { color: "white", font: { size: 10 } },
+                ticks: { color: "#636e72", font: { family: "'Inter', sans-serif" } },
                 grid: { display: false }
               },
               y: {
                 beginAtZero: true,
-                ticks: { color: "white", font: { size: 10 }, precision: 0 },
-                grid: { color: "rgba(255,255,255,0.2)" },
+                ticks: { color: "#636e72", font: { family: "'Inter', sans-serif" }, precision: 0 },
+                grid: { color: "#f1f3f5", borderDash: [5, 5] },
               },
             },
           },
@@ -383,24 +438,20 @@
         list.innerHTML = "";
         
         if (labels.length === 0) {
-            list.innerHTML = `<li class="list-group-item" style="background:rgba(255,255,255,0.1);color:white;">Tidak ada data</li>`;
+            list.innerHTML = `<li class="list-group-item fst-italic text-muted">Tidak ada data</li>`;
         } else {
             labels.forEach((lbl, i) => {
             list.innerHTML += `
-              <li class="list-group-item d-flex justify-content-between align-items-center" 
-                  style="background:rgba(255,255,255,0.1);color:white;border:none;">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span>${lbl}</span>
-                <span class="badge badge-custom rounded-pill">${values[i]}</span>
+                <span class="badge badge-custom">${values[i]}</span>
               </li>`;
             });
         }
       }
 
       const tableColumns = [
-              { 
-                  data: "faskes",
-                  defaultContent: "-" // Tampilkan tanda strip jika data kosong
-              },
+              { data: "faskes", defaultContent: "-" },
               { data: "tanggal", render: formatTimestamp, defaultContent: "-" },
               { data: "nama", defaultContent: "-" },
               { data: "nik", defaultContent: "-" },
@@ -415,75 +466,76 @@
       ];
 
       const commonTableOptions = {
-            dom: '<"top"Bf>rt<"bottom"ip><"clear">',
-            destroy: true, // Penting untuk inisialisasi ulang
+            dom: '<"top"<"row"<"col-md-6"B><"col-md-6"f>>>rt<"bottom"<"row"<"col-md-6"i><"col-md-6"p>>><"clear">',
+            destroy: true,
+            scrollX: true, 
             buttons: [
                 { 
                     extend: 'excel', 
-                    text: '<i class="bi bi-file-earmark-excel"></i> Excel', 
-                    className: 'btn btn-success btn-sm',
+                    text: '<i class="bi bi-file-earmark-excel-fill"></i> Excel', 
+                    className: 'btn btn-success btn-sm me-2',
                     orientation: 'portrait',
                     pageSize: 'A4'
                 },
                 { 
                     extend: 'print', 
-                    text: '<i class="bi bi-printer"></i> Cetak', 
-                    className: 'btn btn-secondary btn-sm' 
+                    text: '<i class="bi bi-printer-fill"></i> Cetak', 
+                    className: 'btn btn-secondary btn-sm',
+                    autoPrint: true
                 }
             ],
             pageLength: 5,
             lengthMenu: [5, 10, 25, 50],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/id.json",
-                emptyTable: "Tidak ada data tersedia untuk tahun ini"
+                emptyTable: "Tidak ada data tersedia untuk tahun ini",
+                search: "_INPUT_",
+                searchPlaceholder: "Cari data..."
             }
       };
 
+      // Failsafe: Force hide loading after 15 seconds if nothing happens
+      setTimeout(function() {
+          if ($("#loading").is(":visible")) {
+              console.warn("Loading timeout dipicu.");
+              $("#loading").fadeOut();
+              alert("Waktu loading terlalu lama. Pastikan koneksi internet lancar.");
+          }
+      }, 15000);
+
+      // ------------------------------------------
+      // SCRIPT INI HANYA BERJALAN 1 KALI SAAT LOAD
+      // ------------------------------------------
       $(document).ready(() => {
-        $("#loading").show();
+        console.log("DOM Ready. Memulai pengambilan data...");
         
         $.getJSON(GAS_URL, function (rows) {
-          $("#loading").hide();
+          console.log("Data diterima:", rows.length, "baris");
+          $("#loading").fadeOut();
 
-          console.log("Total Data dari Google Sheet:", rows.length);
+          try {
+            const data2026 = rows.filter((r) => getSafeYear(r.tanggal) === 2026);
+            const data2025 = rows.filter((r) => getSafeYear(r.tanggal) === 2025);
+            const data2024 = rows.filter((r) => getSafeYear(r.tanggal) === 2024);
 
-          // Pisahkan data berdasarkan tahun dengan fungsi yang lebih aman
-          const data2026 = rows.filter((r) => getSafeYear(r.tanggal) === 2026);
-          const data2025 = rows.filter((r) => getSafeYear(r.tanggal) === 2025);
-          const data2024 = rows.filter((r) => getSafeYear(r.tanggal) === 2024);
+            // Initialize Tables
+            $("#table2026").DataTable({ data: data2026, columns: tableColumns, ...commonTableOptions });
+            $("#table2025").DataTable({ data: data2025, columns: tableColumns, ...commonTableOptions });
+            $("#table2024").DataTable({ data: data2024, columns: tableColumns, ...commonTableOptions });
 
-          console.log("Data 2026:", data2026.length, "baris");
-          console.log("Data 2025:", data2025.length, "baris");
-          console.log("Data 2024:", data2024.length, "baris");
+            // Render Charts
+            renderChart("chart2026", "list2026", data2026, 2026);
+            renderChart("chart2025", "list2025", data2025, 2025);
+            renderChart("chart2024", "list2024", data2024, 2024);
+          } catch (e) {
+            console.error("Error saat memproses data:", e);
+            alert("Terjadi kesalahan saat memproses data. Cek console untuk detail (F12).");
+          }
 
-          // Table 2026
-          $("#table2026").DataTable({
-            data: data2026,
-            columns: tableColumns,
-            ...commonTableOptions
-          });
-
-          // Table 2025
-          $("#table2025").DataTable({
-            data: data2025,
-            columns: tableColumns,
-            ...commonTableOptions
-          });
-
-          // Table 2024
-          $("#table2024").DataTable({
-            data: data2024,
-            columns: tableColumns,
-            ...commonTableOptions
-          });
-
-          // Tampilkan chart per tahun
-          renderChart("chart2026", "list2026", data2026, 2026);
-          renderChart("chart2025", "list2025", data2025, 2025);
-          renderChart("chart2024", "list2024", data2024, 2024);
         }).fail(function() {
-            $("#loading").hide();
-            alert("Gagal memuat data. Periksa koneksi internet Anda.");
+            console.error("Gagal mengambil JSON dari GAS");
+            $("#loading").fadeOut();
+            alert("Gagal memuat data dari server. Periksa koneksi internet Anda.");
         });
       });
     </script>
