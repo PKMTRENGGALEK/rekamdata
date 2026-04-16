@@ -494,25 +494,31 @@
             }
       };
 
-      // Failsafe: Force hide loading after 15 seconds if nothing happens
+      // Failsafe: Force hide loading after 20 seconds
       setTimeout(function() {
           if ($("#loading").is(":visible")) {
               console.warn("Loading timeout dipicu.");
               $("#loading").fadeOut();
-              alert("Waktu loading terlalu lama. Pastikan koneksi internet lancar.");
+              alert("Waktu loading terlalu lama. Halaman mungkin gagal terhubung ke Google Sheet.");
           }
-      }, 15000);
+      }, 20000);
 
-      // ------------------------------------------
-      // SCRIPT INI HANYA BERJALAN 1 KALI SAAT LOAD
-      // ------------------------------------------
       $(document).ready(() => {
         console.log("DOM Ready. Memulai pengambilan data...");
         
         $.getJSON(GAS_URL, function (rows) {
+          // Safety Check 1: Pastikan data adalah Array
+          if (!Array.isArray(rows)) {
+              console.error("Data yang diterima bukan Array! Type:", typeof rows);
+              $("#loading").fadeOut();
+              alert("Gagal memuat data. Format yang diterima dari server salah (bukan JSON Array).");
+              return;
+          }
+          
           console.log("Data diterima:", rows.length, "baris");
           $("#loading").fadeOut();
 
+          // Safety Check 2: Coba-catch di dalam proses data
           try {
             const data2026 = rows.filter((r) => getSafeYear(r.tanggal) === 2026);
             const data2025 = rows.filter((r) => getSafeYear(r.tanggal) === 2025);
@@ -529,13 +535,13 @@
             renderChart("chart2024", "list2024", data2024, 2024);
           } catch (e) {
             console.error("Error saat memproses data:", e);
-            alert("Terjadi kesalahan saat memproses data. Cek console untuk detail (F12).");
+            alert("Terjadi kesalahan saat memproses data: " + e.message);
           }
 
-        }).fail(function() {
-            console.error("Gagal mengambil JSON dari GAS");
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Gagal mengambil JSON dari GAS:", textStatus, errorThrown);
             $("#loading").fadeOut();
-            alert("Gagal memuat data dari server. Periksa koneksi internet Anda.");
+            alert("Gagal memuat data dari server. \nKeterangan: " + textStatus + "\nSilakan cek koneksi internet Anda.");
         });
       });
     </script>
