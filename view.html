@@ -32,7 +32,7 @@
 
     <style>
       :root {
-        --primary-color: #00b894; /* Hijau Modern */
+        --primary-color: #00b894;
         --secondary-color: #6c5ce7;
         --bg-color: #f8f9fa;
         --card-bg: #ffffff;
@@ -53,41 +53,43 @@
         color: var(--text-main);
         min-height: 100vh;
         padding-bottom: 40px;
+        font-size: 14px; /* Ukuran dasar lebih kecil */
       }
       .container {
-        margin-top: 40px;
+        margin-top: 30px;
         max-width: 1200px;
       }
 
-      /* --- HEADER & LOGO --- */
+      /* --- HEADER & LOGO (Natural tanpa Card) --- */
       .logo-container {
         display: flex;
         justify-content: center;
-        gap: 24px;
+        gap: 20px;
         align-items: center;
-        margin-bottom: 24px;
+        margin-bottom: 15px;
       }
       .logo-container img {
-        max-height: 70px;
-        background: #fff;
-        padding: 8px;
-        border-radius: 16px;
-        box-shadow: var(--shadow-sm);
+        max-height: 60px; /* Ukuran logo mengecil */
+        background: transparent; /* Dihilangkan latar kotaknya */
+        padding: 0; 
+        border-radius: 0;
+        box-shadow: none;
         object-fit: contain;
       }
       .header-text {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
       }
       .header-text h2 {
         font-weight: 700;
         color: var(--text-main);
         letter-spacing: -0.5px;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
+        font-size: 1.4rem; /* Lebih kecil */
       }
       .header-text p {
         color: var(--text-muted);
-        font-size: 1.1rem;
+        font-size: 0.85rem; /* Lebih kecil */
         font-weight: 400;
         margin: 0;
       }
@@ -95,33 +97,34 @@
       /* --- CARDS --- */
       .card-modern {
         background: var(--card-bg);
-        border-radius: 20px;
-        padding: 30px;
+        border-radius: 16px;
+        padding: 24px;
         box-shadow: var(--shadow-md);
         border: 1px solid var(--border-color);
-        margin-bottom: 32px;
+        margin-bottom: 28px;
       }
       .card-modern h5 {
         color: var(--text-main);
-        font-weight: 700;
-        padding-bottom: 15px;
-        margin-bottom: 25px;
+        font-weight: 600;
+        font-size: 1rem; /* Lebih kecil */
+        padding-bottom: 12px;
+        margin-bottom: 20px;
         border-bottom: 2px solid var(--border-color);
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
       }
       .card-modern h5 i {
         color: var(--primary-color);
-        font-size: 1.4rem;
+        font-size: 1.1rem;
       }
 
       /* --- CHART AREA --- */
       .chart-section h6 {
         color: var(--text-main);
         font-weight: 600;
-        font-size: 1rem;
-        margin-bottom: 16px;
+        font-size: 0.85rem; /* Lebih kecil */
+        margin-bottom: 12px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -131,10 +134,10 @@
       }
       .chart-wrapper {
         background: #fcfcfd;
-        padding: 20px;
-        border-radius: 16px;
+        padding: 16px;
+        border-radius: 12px;
         border: 1px solid var(--border-color);
-        height: 320px;
+        height: 260px; /* Tingginya dirapatkan */
       }
       
       /* --- LIST STYLING --- */
@@ -142,13 +145,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 14px 16px;
+        padding: 10px 12px;
         background: #fff;
         border: 1px solid var(--border-color) !important;
-        border-radius: 12px !important;
-        margin-bottom: 10px;
+        border-radius: 10px !important;
+        margin-bottom: 8px;
         color: var(--text-main);
-        font-size: 0.95rem;
+        font-size: 0.8rem; /* Lebih kecil */
         font-weight: 500;
         box-shadow: var(--shadow-sm);
       }
@@ -156,14 +159,14 @@
         background-color: rgba(0, 184, 148, 0.1);
         color: var(--primary-color);
         font-weight: 700;
-        padding: 6px 14px;
+        padding: 4px 10px;
         border-radius: 20px;
-        font-size: 0.85rem;
+        font-size: 0.7rem; /* Lebih kecil */
       }
 
       /* --- TABLE STYLING --- */
       .table-responsive {
-        border-radius: 12px;
+        border-radius: 10px;
         border: 1px solid var(--border-color);
         overflow: hidden;
       }
@@ -175,8 +178,8 @@
       table.dataTable thead th {
         border-bottom: 1px solid var(--border-color) !important;
         background-color: #f8f9fa;
-        padding: 16px 15px;
-        font-size: 0.8rem;
+        padding: 10px 12px;
+        font-size: 0.7rem; /* Lebih kecil */
         font-weight: 600;
         color: var(--text-muted);
         text-transform: uppercase;
@@ -184,8 +187,8 @@
       }
       table.dataTable tbody td {
         border-bottom: 1px solid var(--border-color) !important;
-        padding: 14px 15px;
-        font-size: 0.9rem;
+        padding: 10px 12px;
+        font-size: 0.8rem; /* Lebih kecil */
         color: var(--text-main);
         text-align: left;
       }
@@ -202,16 +205,17 @@
       .dataTables_wrapper .dataTables_info, 
       .dataTables_wrapper .dataTables_paginate {
         color: var(--text-muted);
-        margin: 15px 0;
-        font-size: 0.9rem;
+        margin: 10px 0;
+        font-size: 0.8rem; /* Lebih kecil */
       }
       .dataTables_wrapper .dataTables_filter input,
       .dataTables_wrapper .dataTables_length select {
-        border-radius: 8px;
-        padding: 6px 12px;
+        border-radius: 6px;
+        padding: 4px 8px;
         border: 1px solid var(--border-color);
         outline: none;
-        margin-left: 8px;
+        margin-left: 6px;
+        font-size: 0.8rem;
         font-family: 'Inter', sans-serif;
       }
       .dataTables_wrapper .dataTables_filter input:focus {
@@ -219,11 +223,11 @@
         box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.1);
       }
       .dt-buttons .btn {
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-size: 0.85rem;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-size: 0.75rem; /* Lebih kecil */
         font-weight: 500;
-        margin-right: 8px;
+        margin-right: 6px;
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -242,11 +246,12 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       }
       .page-item .page-link {
-        border-radius: 8px !important;
-        margin: 0 4px;
+        border-radius: 6px !important;
+        margin: 0 3px;
         color: var(--text-muted);
         border: none;
-        padding: 0.5rem 0.85rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
       }
       .page-item.active .page-link {
         background-color: var(--primary-color);
@@ -278,23 +283,13 @@
       }
       .loading-text {
         margin-top: 15px;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 500;
         color: var(--text-muted);
       }
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
-      }
-
-      /* Responsive Adjustments */
-      @media (max-width: 768px) {
-        .card-modern {
-          padding: 20px;
-        }
-        .chart-wrapper {
-          height: 280px;
-        }
       }
     </style>
   </head>
@@ -306,7 +301,7 @@
     </div>
 
     <div class="container">
-      <!-- LOGO -->
+      <!-- LOGO NATURAL -->
       <div class="logo-container">
         <img src="pkmlogo.png" alt="PKM Logo" onerror="this.src='https://placehold.co/80x80/ffffff/00b894?text=PKM&font=inter'" />
         <img src="kribo.png" alt="Kribo Logo" onerror="this.src='https://placehold.co/80x80/ffffff/6c5ce7?text=Kribo&font=inter'" />
@@ -468,7 +463,6 @@
             if (String(dateInput).length === 4 && !isNaN(dateInput)) {
                 return parseInt(dateInput);
             }
-            console.warn("Tanggal tidak dikenali:", dateInput);
             return null;
         }
         return d.getFullYear();
@@ -495,25 +489,24 @@
             datasets: [{
               label: `Jumlah Laporan ${year}`,
               data: values,
-              borderColor: "rgba(0, 184, 148, 1)", // Garis hijau modern
+              borderColor: "rgba(0, 184, 148, 1)",
               backgroundColor: (context) => {
                 const chart = context.chart;
                 const { ctx, chartArea } = chart;
                 if (!chartArea) return null;
-                // Gradasi lembut di bawah garis
                 const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
                 gradient.addColorStop(0, 'rgba(0, 184, 148, 0.3)');
                 gradient.addColorStop(1, 'rgba(0, 184, 148, 0)');
                 return gradient;
               },
               fill: true,
-              tension: 0.4, // Membuat garis melengkung halus
+              tension: 0.4,
               borderWidth: 3,
               pointBackgroundColor: "#fff",
               pointBorderColor: "rgba(0, 184, 148, 1)",
               pointBorderWidth: 2,
-              pointRadius: 5,
-              pointHoverRadius: 7,
+              pointRadius: 6, // Diperbesar agar terlihat saat cuma 1 data
+              pointHoverRadius: 8,
             }],
           },
           options: {
@@ -525,28 +518,30 @@
                 backgroundColor: 'rgba(45, 52, 54, 0.9)',
                 titleColor: '#fff',
                 bodyColor: '#fff',
-                padding: 12,
+                padding: 10,
                 cornerRadius: 8,
                 displayColors: false,
               }
             },
             scales: {
               x: {
+                offset: true, // Menjaga titik tidak menempel di pinggir
                 ticks: {
                   color: "#636e72",
-                  font: { size: 11, family: "'Inter', sans-serif" }
+                  font: { size: 10, family: "'Inter', sans-serif" }
                 },
-                grid: { display: false } // Sembunyikan garis vertikal agar lebih bersih
+                grid: { display: false }
               },
               y: {
                 beginAtZero: true,
+                suggestedMax: 1, // Agar 1 data tidak terlihat seperti garis lurus kosong di bawah
                 ticks: {
                   color: "#636e72",
-                  font: { size: 11, family: "'Inter', sans-serif" },
+                  font: { size: 10, family: "'Inter', sans-serif" },
                   precision: 0
                 },
                 grid: {
-                  color: "rgba(0,0,0,0.05)", // Garis horizontal sangat tipis
+                  color: "rgba(0,0,0,0.05)",
                   drawBorder: false
                 }
               }
@@ -616,8 +611,6 @@
         
         $.getJSON(GAS_URL, function (rows) {
           $("#loading").hide();
-
-          console.log("Total Data dari Google Sheet:", rows.length);
 
           const data2026 = rows.filter((r) => getSafeYear(r.tanggal) === 2026);
           const data2025 = rows.filter((r) => getSafeYear(r.tanggal) === 2025);
