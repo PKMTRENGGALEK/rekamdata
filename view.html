@@ -3,23 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Skrining Kesehatan</title>
+    <title>Data Skrining TBC</title>
 
     <!-- Bootstrap & DataTables -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
+    <!-- Google Fonts: Inter (Modern Minimalist) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -35,134 +31,271 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-      /* --- STYLE PUTIH --- */
-      body {
-        background-color: #f8f9fa;
-        color: #333;
-        min-height: 100vh;
-      }
-      .container {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        text-align: center;
-      }
-      .card {
-        background: #ffffff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        border: 1px solid #dee2e6;
-      }
-      .card h5 {
-        color: #2d3436;
-        padding-bottom: 15px;
-        border-bottom: 2px solid #f1f3f5;
-      }
-      .card h6 {
-        color: #495057;
-        font-weight: 600;
+      :root {
+        --primary-color: #00b894; /* Hijau Modern */
+        --secondary-color: #6c5ce7;
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --text-main: #2d3436;
+        --text-muted: #636e72;
+        --border-color: #e9ecef;
+        --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+        --shadow-md: 0 10px 30px rgba(0,0,0,0.06);
       }
 
-      /* DataTable Styling - Light Mode */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        min-height: 100vh;
+        padding-bottom: 40px;
+      }
+      .container {
+        margin-top: 40px;
+        max-width: 1200px;
+      }
+
+      /* --- HEADER & LOGO --- */
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .logo-container img {
+        max-height: 70px;
+        background: #fff;
+        padding: 8px;
+        border-radius: 16px;
+        box-shadow: var(--shadow-sm);
+        object-fit: contain;
+      }
+      .header-text {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .header-text h2 {
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+      }
+      .header-text p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      /* --- CARDS --- */
+      .card-modern {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        margin-bottom: 32px;
+      }
+      .card-modern h5 {
+        color: var(--text-main);
+        font-weight: 700;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .card-modern h5 i {
+        color: var(--primary-color);
+        font-size: 1.4rem;
+      }
+
+      /* --- CHART AREA --- */
+      .chart-section h6 {
+        color: var(--text-main);
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .chart-section h6 i {
+        color: var(--primary-color);
+      }
+      .chart-wrapper {
+        background: #fcfcfd;
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        height: 320px;
+      }
+      
+      /* --- LIST STYLING --- */
+      .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px;
+        background: #fff;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 12px !important;
+        margin-bottom: 10px;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        font-weight: 500;
+        box-shadow: var(--shadow-sm);
+      }
+      .badge-custom {
+        background-color: rgba(0, 184, 148, 0.1);
+        color: var(--primary-color);
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+      }
+
+      /* --- TABLE STYLING --- */
+      .table-responsive {
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+      }
+      table.dataTable {
+        width: 100% !important;
+        margin: 0 !important;
+        border-collapse: collapse !important;
+      }
+      table.dataTable thead th {
+        border-bottom: 1px solid var(--border-color) !important;
+        background-color: #f8f9fa;
+        padding: 16px 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      table.dataTable tbody td {
+        border-bottom: 1px solid var(--border-color) !important;
+        padding: 14px 15px;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        text-align: left;
+      }
+      table.dataTable tbody tr:last-child td {
+        border-bottom: none !important;
+      }
+      table.dataTable tbody tr:hover td {
+        background-color: #f8f9fa !important;
+      }
+      
+      /* --- DATATABLES CONTROLS --- */
       .dataTables_wrapper .dataTables_length, 
       .dataTables_wrapper .dataTables_filter, 
       .dataTables_wrapper .dataTables_info, 
       .dataTables_wrapper .dataTables_paginate {
-        color: #636e72;
-        margin-top: 10px;
+        color: var(--text-muted);
+        margin: 15px 0;
+        font-size: 0.9rem;
       }
-      .dataTables_wrapper .dataTables_filter input {
-        border-radius: 5px;
-        padding: 5px;
-        border: 1px solid #dee2e6;
+      .dataTables_wrapper .dataTables_filter input,
+      .dataTables_wrapper .dataTables_length select {
+        border-radius: 8px;
+        padding: 6px 12px;
+        border: 1px solid var(--border-color);
+        outline: none;
+        margin-left: 8px;
+        font-family: 'Inter', sans-serif;
+      }
+      .dataTables_wrapper .dataTables_filter input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.1);
+      }
+      .dt-buttons .btn {
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-right: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: none;
+        transition: all 0.2s ease;
+      }
+      .dt-buttons .btn-success {
+        background-color: var(--primary-color);
+      }
+      .dt-buttons .btn-secondary {
+        background-color: #e9ecef;
+        color: var(--text-main);
+      }
+      .dt-buttons .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      .page-item .page-link {
+        border-radius: 8px !important;
+        margin: 0 4px;
+        color: var(--text-muted);
+        border: none;
+        padding: 0.5rem 0.85rem;
       }
       .page-item.active .page-link {
-        background-color: #67b26f;
-        border-color: #67b26f;
-      }
-      .page-link { color: #495057; }
-      
-      .table {
-        font-size: 12px;
-        text-transform: uppercase;
-        color: #333; 
-      }
-      .table thead tr {
-        background-color: #f1f3f5;
-        color: #2d3436;
-      }
-      .table tbody tr:hover {
-        background-color: #f8f9fa;
-      }
-      .table-container {
-        background: #ffffff;
-        border-radius: 10px;
-        padding: 10px;
-        min-height: 200px; 
+        background-color: var(--primary-color);
+        color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 184, 148, 0.3);
       }
       
+      /* --- LOADING OVERLAY --- */
       .loading-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.98);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 9999;
         flex-direction: column;
       }
-      .loading-text {
-        margin-top: 20px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
-      }
       .loading-spinner {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        border: 6px solid #e9ecef;
-        border-top: 6px solid #67b26f;
+        border: 4px solid #e9ecef;
+        border-top: 4px solid var(--primary-color);
         animation: spin 1s linear infinite;
+      }
+      .loading-text {
+        margin-top: 15px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-muted);
       }
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
-      
-      /* --- STYLE LOGO --- */
-      .logo-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        background: #ffffff;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        border: 1px solid #e9ecef;
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .card-modern {
+          padding: 20px;
+        }
+        .chart-wrapper {
+          height: 280px;
+        }
       }
-      .logo-container img {
-        max-height: 80px;
-        background: #ffffff;
-        border: 2px solid #ced4da; /* Border abu-abu agar terlihat */
-        border-radius: 50%; 
-        padding: 5px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Bayangan agar melayang */
-        object-fit: contain;
-      }
-      
-      .badge-custom {
-        background-color: #e3fcf7;
-        color: #0ca678;
-        font-weight: bold;
-      }
-      
-      .btn-success { color: #fff; }
-      .btn-secondary { color: #fff; }
     </style>
   </head>
 
@@ -173,23 +306,23 @@
     </div>
 
     <div class="container">
-      <!-- LOGO DENGAN BORDER AGAR TERLIHAT -->
+      <!-- LOGO -->
       <div class="logo-container">
-        <!-- Jika gambar tidak ada, muncul teks "PKM" warna hijau -->
-        <img src="pkmlogo.png" alt="PKM Logo" onerror="this.src='https://via.placeholder.com/90x90/28a745/ffffff?text=PKM&border-radius=50%'" />
-        <!-- Jika gambar tidak ada, muncul teks "Kribo" warna biru -->
-        <img src="kribo.png" alt="Kribo Logo" onerror="this.src='https://via.placeholder.com/90x90/17a2b8/ffffff?text=Kribo&border-radius=50%'" />
+        <img src="pkmlogo.png" alt="PKM Logo" onerror="this.src='https://placehold.co/80x80/ffffff/00b894?text=PKM&font=inter'" />
+        <img src="kribo.png" alt="Kribo Logo" onerror="this.src='https://placehold.co/80x80/ffffff/6c5ce7?text=Kribo&font=inter'" />
       </div>
       
-      <h2 class="fw-bold" style="color: #2d3436;">Data Skrining TBC</h2>
-      <h4 class="mb-4" style="color: #636e72;">Agen Kribo</h4>
+      <div class="header-text">
+        <h2>Data Skrining TBC</h2>
+        <p>Pemantauan & Rekapitulasi Data Tahunan</p>
+      </div>
 
       <!-- Tahun 2026 -->
-      <div class="card p-4 mb-4">
-        <h5 class="pb-2">Data Tahun 2026</h5>
+      <div class="card-modern">
+        <h5><i class="bi bi-calendar3"></i> Data Tahun 2026</h5>
         
-        <div class="table-responsive mb-3">
-          <table id="table2026" class="table table-striped table-bordered w-100">
+        <div class="table-responsive mb-4">
+          <table id="table2026" class="table w-100">
             <thead>
               <tr>
                 <th>Faskes</th>
@@ -210,29 +343,29 @@
           </table>
         </div>
 
-        <div class="mt-2">
-          <h6 class="mb-3 text-start">
-            <i class="bi bi-bar-chart-fill"></i> Grafik Jumlah Laporan per Faskes (2026)
+        <div class="chart-section mt-4">
+          <h6>
+            <i class="bi bi-graph-up-arrow"></i> Tren Jumlah Laporan per Faskes (2026)
           </h6>
           <div class="row align-items-center">
-            <div class="col-md-8">
-              <div style="background: #f8f9fa; padding: 10px; border-radius: 10px; border: 1px solid #e9ecef;">
-                <canvas id="chart2026" style="height: 250px; width: 100%;"></canvas>
+            <div class="col-md-7 mb-4 mb-md-0">
+              <div class="chart-wrapper">
+                <canvas id="chart2026"></canvas>
               </div>
             </div>
-            <div class="col-md-4">
-              <ul id="list2026" class="list-group list-group-flush text-start"></ul>
+            <div class="col-md-5">
+              <ul id="list2026" class="list-group list-group-flush"></ul>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Tahun 2025 -->
-      <div class="card p-4 mb-4">
-        <h5 class="pb-2">Data Tahun 2025</h5>
+      <div class="card-modern">
+        <h5><i class="bi bi-calendar3"></i> Data Tahun 2025</h5>
         
-        <div class="table-responsive mb-3">
-          <table id="table2025" class="table table-striped table-bordered w-100">
+        <div class="table-responsive mb-4">
+          <table id="table2025" class="table w-100">
             <thead>
               <tr>
                 <th>Faskes</th>
@@ -253,29 +386,29 @@
           </table>
         </div>
 
-        <div class="mt-2">
-          <h6 class="mb-3 text-start">
-             Grafik Jumlah Laporan per Faskes (2025)
+        <div class="chart-section mt-4">
+          <h6>
+            <i class="bi bi-graph-up-arrow"></i> Tren Jumlah Laporan per Faskes (2025)
           </h6>
           <div class="row align-items-center">
-            <div class="col-md-8">
-              <div style="background: #f8f9fa; padding: 10px; border-radius: 10px; border: 1px solid #e9ecef;">
-                <canvas id="chart2025" style="height: 250px; width: 100%;"></canvas>
+            <div class="col-md-7 mb-4 mb-md-0">
+              <div class="chart-wrapper">
+                <canvas id="chart2025"></canvas>
               </div>
             </div>
-            <div class="col-md-4">
-              <ul id="list2025" class="list-group list-group-flush text-start"></ul>
+            <div class="col-md-5">
+              <ul id="list2025" class="list-group list-group-flush"></ul>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Tahun 2024 -->
-      <div class="card p-4">
-        <h5 class="pb-2">Data Tahun 2024</h5>
+      <div class="card-modern">
+        <h5><i class="bi bi-calendar3"></i> Data Tahun 2024</h5>
         
-        <div class="table-responsive mb-3">
-          <table id="table2024" class="table table-striped table-bordered w-100">
+        <div class="table-responsive mb-4">
+          <table id="table2024" class="table w-100">
             <thead>
               <tr>
                 <th>Faskes</th>
@@ -296,18 +429,18 @@
           </table>
         </div>
 
-        <div class="mt-2">
-          <h6 class="mb-3 text-start">
-            Grafik Jumlah Laporan per Faskes (2024)
+        <div class="chart-section mt-4">
+          <h6>
+            <i class="bi bi-graph-up-arrow"></i> Tren Jumlah Laporan per Faskes (2024)
           </h6>
           <div class="row align-items-center">
-            <div class="col-md-8">
-              <div style="background: #f8f9fa; padding: 10px; border-radius: 10px; border: 1px solid #e9ecef;">
-                <canvas id="chart2024" style="height: 250px; width: 100%;"></canvas>
+            <div class="col-md-7 mb-4 mb-md-0">
+              <div class="chart-wrapper">
+                <canvas id="chart2024"></canvas>
               </div>
             </div>
-            <div class="col-md-4">
-              <ul id="list2024" class="list-group list-group-flush text-start"></ul>
+            <div class="col-md-5">
+              <ul id="list2024" class="list-group list-group-flush"></ul>
             </div>
           </div>
         </div>
@@ -315,8 +448,7 @@
     </div>
 
     <script>
-      const GAS_URL =
-        "https://script.google.com/macros/s/AKfycbxeMNOb6KnATCyppjqP2rdH7AAMXR-BfKvtutXyi2IdhGGflC7Hi_1mfTqRIlEp6xV-/exec";
+      const GAS_URL = "https://script.google.com/macros/s/AKfycbxeMNOb6KnATCyppjqP2rdH7AAMXR-BfKvtutXyi2IdhGGflC7Hi_1mfTqRIlEp6xV-/exec";
 
       function formatTimestamp(ts) {
         if (!ts) return "-";
@@ -352,106 +484,131 @@
         const labels = Object.keys(count);
         const values = Object.values(count);
 
-        const colors = [
-          "rgba(103, 178, 111, 0.7)",
-          "rgba(76, 162, 205, 0.7)",
-          "rgba(255, 206, 86, 0.7)",
-          "rgba(75, 192, 192, 0.7)",
-          "rgba(153, 102, 255, 0.7)",
-          "rgba(255, 159, 64, 0.7)",
-          "rgba(200, 200, 200, 0.7)",
-        ];
-
         const existingChart = Chart.getChart(targetCanvas);
         if (existingChart) existingChart.destroy();
 
+        // Membuat Grafik Garis (Line Chart) Modern
         new Chart(document.getElementById(targetCanvas), {
-          type: "bar",
+          type: "line",
           data: {
             labels,
-            datasets: [
-              {
-                label: `Jumlah Laporan ${year}`,
-                data: values,
-                backgroundColor: colors.slice(0, labels.length),
-                borderColor: "#fff",
-                borderWidth: 1.5,
-                borderRadius: 5,
+            datasets: [{
+              label: `Jumlah Laporan ${year}`,
+              data: values,
+              borderColor: "rgba(0, 184, 148, 1)", // Garis hijau modern
+              backgroundColor: (context) => {
+                const chart = context.chart;
+                const { ctx, chartArea } = chart;
+                if (!chartArea) return null;
+                // Gradasi lembut di bawah garis
+                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient.addColorStop(0, 'rgba(0, 184, 148, 0.3)');
+                gradient.addColorStop(1, 'rgba(0, 184, 148, 0)');
+                return gradient;
               },
-            ],
+              fill: true,
+              tension: 0.4, // Membuat garis melengkung halus
+              borderWidth: 3,
+              pointBackgroundColor: "#fff",
+              pointBorderColor: "rgba(0, 184, 148, 1)",
+              pointBorderWidth: 2,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+            }],
           },
           options: {
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'rgba(45, 52, 54, 0.9)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                padding: 12,
+                cornerRadius: 8,
+                displayColors: false,
+              }
+            },
             scales: {
-              x: { 
-                ticks: { color: "#495057", font: { size: 10 } },
-                grid: { display: false }
+              x: {
+                ticks: {
+                  color: "#636e72",
+                  font: { size: 11, family: "'Inter', sans-serif" }
+                },
+                grid: { display: false } // Sembunyikan garis vertikal agar lebih bersih
               },
               y: {
                 beginAtZero: true,
-                ticks: { color: "#495057", font: { size: 10 }, precision: 0 },
-                grid: { color: "rgba(0,0,0,0.05)" },
-              },
-            },
-          },
+                ticks: {
+                  color: "#636e72",
+                  font: { size: 11, family: "'Inter', sans-serif" },
+                  precision: 0
+                },
+                grid: {
+                  color: "rgba(0,0,0,0.05)", // Garis horizontal sangat tipis
+                  drawBorder: false
+                }
+              }
+            }
+          }
         });
 
         const list = document.getElementById(targetList);
         list.innerHTML = "";
         
         if (labels.length === 0) {
-            list.innerHTML = `<li class="list-group-item" style="background:#f8f9fa;color:#495057;">Tidak ada data</li>`;
+            list.innerHTML = `<li class="list-group-item">Tidak ada data</li>`;
         } else {
             labels.forEach((lbl, i) => {
-            list.innerHTML += `
-              <li class="list-group-item d-flex justify-content-between align-items-center" 
-                  style="background:#f8f9fa;color:#495057;border:none;">
-                <span>${lbl}</span>
-                <span class="badge badge-custom rounded-pill">${values[i]}</span>
-              </li>`;
+              list.innerHTML += `
+                <li class="list-group-item">
+                  <span>${lbl}</span>
+                  <span class="badge-custom">${values[i]}</span>
+                </li>`;
             });
         }
       }
 
       const tableColumns = [
-              { data: "faskes", defaultContent: "-" },
-              { data: "tanggal", render: formatTimestamp, defaultContent: "-" },
-              { data: "nama", defaultContent: "-" },
-              { data: "nik", defaultContent: "-" },
-              { data: "no_telp", defaultContent: "-" },
-              { data: "provinsi", defaultContent: "-" },
-              { data: "kabupaten", defaultContent: "-" },
-              { data: "kecamatan", defaultContent: "-" },
-              { data: "kelurahan", defaultContent: "-" },
-              { data: "rt", defaultContent: "-" },
-              { data: "rw", defaultContent: "-" },
-              { data: "lama_batuk", defaultContent: "-" },
+        { data: "faskes", defaultContent: "-" },
+        { data: "tanggal", render: formatTimestamp, defaultContent: "-" },
+        { data: "nama", defaultContent: "-" },
+        { data: "nik", defaultContent: "-" },
+        { data: "no_telp", defaultContent: "-" },
+        { data: "provinsi", defaultContent: "-" },
+        { data: "kabupaten", defaultContent: "-" },
+        { data: "kecamatan", defaultContent: "-" },
+        { data: "kelurahan", defaultContent: "-" },
+        { data: "rt", defaultContent: "-" },
+        { data: "rw", defaultContent: "-" },
+        { data: "lama_batuk", defaultContent: "-" },
       ];
 
+      // Konfigurasi DataTables Minimalis
       const commonTableOptions = {
-            dom: '<"top"Bf>rt<"bottom"ip><"clear">',
-            destroy: true,
-            buttons: [
-                { 
-                    extend: 'excel', 
-                    text: '<i class="bi bi-file-earmark-excel"></i> Excel', 
-                    className: 'btn btn-success btn-sm',
-                    orientation: 'portrait',
-                    pageSize: 'A4'
-                },
-                { 
-                    extend: 'print', 
-                    text: '<i class="bi bi-printer"></i> Cetak', 
-                    className: 'btn btn-secondary btn-sm' 
-                }
-            ],
-            pageLength: 5,
-            lengthMenu: [5, 10, 25, 50],
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/id.json",
-                emptyTable: "Tidak ada data tersedia untuk tahun ini"
-            }
+        dom: '<"row mb-3"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6 text-md-end"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7 mt-3 mt-md-0 d-flex justify-content-md-end"p>>',
+        destroy: true,
+        buttons: [
+          { 
+            extend: 'excel', 
+            text: '<i class="bi bi-file-earmark-excel"></i> Excel', 
+            className: 'btn btn-success btn-sm',
+            orientation: 'portrait',
+            pageSize: 'A4'
+          },
+          { 
+            extend: 'print', 
+            text: '<i class="bi bi-printer"></i> Cetak', 
+            className: 'btn btn-secondary btn-sm' 
+          }
+        ],
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50],
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/id.json",
+          emptyTable: "Tidak ada data tersedia untuk tahun ini"
+        }
       };
 
       $(document).ready(() => {
@@ -465,10 +622,6 @@
           const data2026 = rows.filter((r) => getSafeYear(r.tanggal) === 2026);
           const data2025 = rows.filter((r) => getSafeYear(r.tanggal) === 2025);
           const data2024 = rows.filter((r) => getSafeYear(r.tanggal) === 2024);
-
-          console.log("Data 2026:", data2026.length, "baris");
-          console.log("Data 2025:", data2025.length, "baris");
-          console.log("Data 2024:", data2024.length, "baris");
 
           $("#table2026").DataTable({ data: data2026, columns: tableColumns, ...commonTableOptions });
           $("#table2025").DataTable({ data: data2025, columns: tableColumns, ...commonTableOptions });
