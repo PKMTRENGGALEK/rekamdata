@@ -95,10 +95,35 @@
       }
       .card-modern h5 i { color: var(--primary-color); font-size: 1.2rem; }
 
-      /* --- CHART AREA --- */
+      /* --- CHART & SUMMARY AREA --- */
       .chart-wrapper {
         background: #fcfcfd; padding: 20px; border-radius: 12px;
-        border: 1px solid var(--border-color); height: 400px; position: relative;
+        border: 1px solid var(--border-color); height: 450px; position: relative;
+      }
+      .summary-list {
+        max-height: 450px; overflow-y: auto; padding-right: 10px;
+      }
+      .summary-list::-webkit-scrollbar { width: 6px; }
+      .summary-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+      .summary-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+      
+      .summary-year-group { margin-bottom: 24px; }
+      .summary-year-group:last-child { margin-bottom: 0; }
+      .summary-year-title {
+        font-size: 0.9rem; font-weight: 600; color: var(--text-main);
+        margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        padding-bottom: 8px; border-bottom: 1px solid var(--border-color);
+      }
+      .summary-year-title .dot { width: 10px; height: 10px; border-radius: 50%; }
+      
+      .summary-item {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 14px; background: #f8f9fa; border-radius: 8px; margin-bottom: 6px; font-size: 0.8rem;
+      }
+      .summary-item .name { color: var(--text-main); font-weight: 500; }
+      .summary-item .count {
+        background: #fff; padding: 3px 12px; border-radius: 12px;
+        font-weight: 700; font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border-color);
       }
 
       /* --- CONTROLS --- */
@@ -198,14 +223,23 @@
         </div>
       </div>
 
-      <!-- CHART CARD -->
+      <!-- CHART & SUMMARY CARD -->
       <div class="card-modern mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
           <h5><i class="bi bi-graph-up-arrow"></i> Tren Jumlah Laporan per Faskes</h5>
           <span class="text-muted small">Perbandingan antar tahun</span>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="mainChart"></canvas>
+        
+        <div class="row">
+          <div class="col-lg-8 mb-4 mb-lg-0">
+            <div class="chart-wrapper">
+              <canvas id="mainChart"></canvas>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <h6 class="mb-3 text-muted">Rincian Total per Tahun</h6>
+            <div id="chartSummary" class="summary-list"></div>
+          </div>
         </div>
       </div>
 
@@ -282,6 +316,7 @@
         return d.getFullYear();
       }
 
+      // Render Grafik Garis Tren
       function renderMainChart(allData) {
         const faskesSet = new Set();
         const yearsSet = new Set();
@@ -298,10 +333,10 @@
           const counts = faskesLabels.map(f => allData.filter(r => r.faskes === f && r.tahun === year).length);
           
           const colors = {
-            2024: { border: 'rgba(108, 92, 231, 1)', point: 'rgba(108, 92, 231, 1)' },
-            2025: { border: 'rgba(0, 184, 148, 1)', point: 'rgba(0, 184, 148, 1)' },
-            2026: { border: 'rgba(9, 132, 227, 1)', point: 'rgba(9, 132, 227, 1)' },
-            default: { border: 'rgba(255, 159, 64, 1)', point: 'rgba(255, 159, 64, 1)' }
+            2024: { border: 'rgba(108, 92, 231, 1)' },
+            2025: { border: 'rgba(0, 184, 148, 1)' },
+            2026: { border: 'rgba(9, 132, 227, 1)' },
+            default: { border: 'rgba(255, 159, 64, 1)' }
           };
           
           return {
@@ -313,7 +348,7 @@
             tension: 0.4,
             borderWidth: 3,
             pointBackgroundColor: "#fff",
-            pointBorderColor: colors[year]?.point || colors.default.point,
+            pointBorderColor: colors[year]?.border || colors.default.border,
             pointBorderWidth: 2,
             pointRadius: 5,
             pointHoverRadius: 7
@@ -356,6 +391,54 @@
         });
       }
 
+      // Render Rincian Total di samping Grafik
+      function renderChartSummary(allData) {
+        const yearsSet = new Set();
+        allData.forEach(r => { if (r.tahun) yearsSet.add(r.tahun); });
+        const years = Array.from(yearsSet).sort().reverse(); // Urutkan dari tahun terbaru ke terlama
+        
+        const colors = {
+          2024: 'rgba(108, 92, 231, 1)',
+          2025: 'rgba(0, 184, 148, 1)',
+          2026: 'rgba(9, 132, 227, 1)',
+          default: 'rgba(255, 159, 64, 1)'
+        };
+        
+        let html = '';
+        
+        if (years.length === 0) {
+          html = '<p class="text-muted small">Tidak ada data tersedia</p>';
+        } else {
+          years.forEach(year => {
+            const yearData = allData.filter(r => r.tahun === year);
+            const faskesCount = {};
+            yearData.forEach(r => {
+              const f = r.faskes || "Tidak diketahui";
+              faskesCount[f] = (faskesCount[f] || 0) + 1;
+            });
+            
+            html += `<div class="summary-year-group">`;
+            html += `<div class="summary-year-title">
+                      <span class="dot" style="background:${colors[year] || colors.default}"></span> 
+                      Tahun ${year} 
+                      <span class="ms-auto text-muted small">Total: ${yearData.length}</span>
+                    </div>`;
+            
+            Object.keys(faskesCount).forEach(faskes => {
+              html += `
+                <div class="summary-item">
+                  <span class="name">${faskes}</span>
+                  <span class="count">${faskesCount[faskes]}</span>
+                </div>`;
+            });
+            
+            html += `</div>`;
+          });
+        }
+        
+        $('#chartSummary').html(html);
+      }
+
       const tableColumns = [
         { data: "tahun", defaultContent: "-" },
         { data: "faskes", defaultContent: "-" },
@@ -396,8 +479,9 @@
           const yearFilter = $('#yearFilter');
           years.forEach(y => { yearFilter.append(`<option value="${y}">${y}</option>`); });
           
-          // Render Grafik Gabungan
+          // Render Grafik & Summary
           renderMainChart(rows);
+          renderChartSummary(rows);
           
           // Inisialisasi DataTable
           const table = $("#mainTable").DataTable({
